@@ -1,0 +1,223 @@
+package milesstone;
+
+import java.util.Scanner; //Open scanner class
+import java.util.ArrayList; //Open array list class
+import java.text.DecimalFormat; //Open decimalformat class
+
+/**
+ * Program accept Ingredient class objects, containing all details stored in an Ingredient class
+ * 
+ * @author Soua Vang
+ */
+public class Recipe {
+    //Define private variables
+    private String recipeName;
+    private int servings;
+    private ArrayList<Ingredient> recipeIngredients = new ArrayList<>();
+    private int totalRecipeCalories;
+    private double recipeCost;
+    
+    //Add mutators and accessors for the class variable
+     /**
+      * @return the recipeName
+      */
+    public String getRecipeName() {
+        return recipeName;
+    }
+    
+    /**
+     * @param recipeName to modify the value of private instance variable
+     */
+    public void setRecipeName(String recipeName) {
+        this.recipeName = recipeName;
+    }
+    
+    /**
+     * @return servings
+     */
+    public int getServings() {
+        return servings;
+    }
+    
+    /**
+     * @param servings to modify the value of private instance variable
+     */
+    public void setServings(int servings) {
+        this.servings = servings;
+    }
+    
+    /**
+     * @return recipeIngredients
+     */
+    public ArrayList<Ingredient> getRecipeIngredients() {
+        return recipeIngredients;
+    }
+    
+    /**
+     * @param recipeIngredients to modify the value of private instance variable
+     */
+    public void setRecipeIngredients(ArrayList<Ingredient> recipeIngredients) {
+        this.recipeIngredients = recipeIngredients;
+    }
+    
+    /**
+     * @return totalRecipeCalories
+     */
+    public int getTotalRecipeCalories() {
+        return totalRecipeCalories;
+    }
+    
+    /**
+     * @param totalRecipeCalories to modify the value of private instance variable
+     */
+    public void setTotalRecipeCalories(int totalRecipeCalories) {
+        this.totalRecipeCalories = totalRecipeCalories;
+    }
+    
+    /**
+     * @param recipeCost to modify the value of private instance variable
+     */
+    public void setRecipeCost(double recipeCost) {
+        this.recipeCost = recipeCost;
+    }
+    
+    /**
+     * @return the recipeCost
+     */
+    public double getRecipeCost() {
+        return recipeCost;
+    }
+    //End of mutators and accessors for class variable
+    
+    //Constructors starts
+    /**
+     * Refer to current class instance variable
+     */
+    public Recipe() {
+        this.recipeName = "";
+        this.servings = 0;
+        this.recipeIngredients = new ArrayList<>();
+        this.totalRecipeCalories = 0;
+        this.recipeCost = 0;
+    }
+    //Constructors end
+    
+    /**
+     * Parameterized constructor
+     * @param recipeName
+     * @param servings
+     * @param recipeIngredients
+     * @param totalRecipeCalories
+     * @param recipeCost
+     */
+    public Recipe(String recipeName, int servings, ArrayList<Ingredient> recipeIngredients, int totalRecipeCalories, double recipeCost) {
+        this.recipeName = recipeName;
+        this.servings = servings;
+        this.recipeIngredients = recipeIngredients;
+        this.totalRecipeCalories = totalRecipeCalories;
+        this.recipeCost = recipeCost;
+    }
+    //End of constructors
+    
+
+    /**
+     * Custom a recipeTotal method to provide the total price of recipe
+     * 
+     */
+    public void recipeTotal() {
+        //Declare variables
+        Ingredient ingredient = new Ingredient();//Open Ingredient class for access to objects
+        Scanner scnr = new Scanner(System.in);//Open scanner to prompt user
+        
+        // Prompt user to enter how many ingredients the recipe have for calculation
+        System.out.println("How many ingredients do you want to calculate to get the recipe total: ");
+        int num = scnr.nextInt();
+        
+        // Loop by how many ingredients user wants to calculate, then stop per number of ingredients
+        for (int i = 0; i < num; i++) {
+            // Prompt user to enter ingredient price
+            System.out.println("Please enter the price per ingredient: ");
+            float price = scnr.nextFloat();
+            // Prompt user to enter the ingredient amount used
+            System.out.println("Please enter the ingredient amount per used: ");
+            float amountPerUsed = scnr.nextFloat();
+            // Calculate price per amountPerUsed and saved to variable recipeCost
+            recipeCost += price*amountPerUsed;
+        }
+        DecimalFormat df = new DecimalFormat("#.##"); // Format recipeCost variable to 2 decimal places
+        String formatted = df.format(recipeCost); // Save formmated recipeCost to new variable formatted
+        System.out.println("Your total recipe cost $" + formatted); // Display total amount to user
+    }
+    
+    /**
+     * printRecipe method is to print the recipe detail
+     */
+    public void printRecipe() {        
+        //Declare int variable singleServingCalories to save the division of totalRecipeCalories by servings
+        int singleServingCalories = (getTotalRecipeCalories() / getServings());
+        
+        System.out.println("Recipe: " + recipeName);//Print to display the recipe name
+        System.out.println("Serves: " + servings);//Print to display the number of serves
+        System.out.println("Ingredients: ");//Print to display the ingredients
+        
+        /**
+         * Loop to iterate through the ingredients
+         */
+        for(int i = 0; i < recipeIngredients.size(); i++) {
+            Ingredient ingredient = recipeIngredients.get(i);
+            ingredient.printItemDetails();
+            System.out.println("");
+        }
+        
+        /**
+         * Display the total single serving calories after loop ends
+         */
+        System.out.println("Each serving has " + singleServingCalories + " calories.");
+    }
+    
+    /**
+     * Create new recipe method to build recipes prior to user input
+     * @return recipe1
+     */
+    public Recipe addNewRecipe() {
+        //Declared objects
+        recipeIngredients = new ArrayList<>();
+        boolean addMoreIngredients = true;
+        Ingredient newIngredient = new Ingredient();
+        
+        Scanner scnr = new Scanner(System.in); //Open scanner class
+        
+        //Prompt user to enter the recipe name
+        System.out.println("Please enter the recipe name: ");
+        recipeName = scnr.nextLine();//Read line until next new line
+        
+        //Prompt user to enter the number of servings
+        System.out.println("Please enter the number of servings: ");
+        servings = scnr.nextInt();//Read next tokens of input as int
+        
+        //Condition servings if user enter wrong number
+        if (servings < 1) {
+            System.out.print(servings + " is not a valid number of servings. Please enter a positive number: ");
+            servings = scnr.nextInt();
+        }
+        
+        //Request user to enter an ingredient and loop until user entered 'n' to stop the loop
+        do{
+            System.out.println("Would you like to add an ingredient to this recipe (y or n):");
+            String ingredientAdd = scnr.next();
+            //If 'y', then add the ingredient to the recipe collection and calculate the total recipe calories
+            if (ingredientAdd.toLowerCase().equals("y") || ingredientAdd.toLowerCase().equals("yes")) {
+                recipeIngredients.add(newIngredient.addIngredient()); //Call addIngredient method from Ingredient class
+                //Calculate the total recipe calories to totalRecipeCalories
+                totalRecipeCalories = (int) (newIngredient.getIngredientAmount() * newIngredient.getNumberCaloriesPerCup());
+            }else {
+                break; //Stop if entered 'n'
+            }
+        } while (addMoreIngredients); //Loop while addMoreIngredients is true
+        //Loop ends
+        
+        //Instantiates Recipe to allocate memory for new object and return reference
+        Recipe recipe1 = new Recipe(recipeName, servings, recipeIngredients, totalRecipeCalories, recipeCost);
+        return recipe1;
+    }
+}
