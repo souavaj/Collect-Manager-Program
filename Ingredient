@@ -1,0 +1,243 @@
+package milesstone;
+
+import java.util.Scanner; //Import the Scanner class
+
+/**
+ * The Ingredient class to accept user's input for each variable
+ */
+public class Ingredient {
+    private String nameOfIngredient;
+    private String unitMeasurement;
+    private float ingredientAmount;
+    private int numberCaloriesPerCup;
+    private double totalCalories;
+    
+   /**
+    * @param nameOfIngredient to modify the value of private instance variable
+    */
+    public void setNameOfIngredient(String nameOfIngredient) {
+        this.nameOfIngredient = nameOfIngredient;
+    }
+
+   /**
+    * @return nameOfIngredient
+    */
+    public String getNameOfIngredient() {
+        return nameOfIngredient;
+    }
+
+   /**
+    * @param unitMeasurement to modify the value of private instance variable
+    */
+    public void setUnitMeasurement(String unitMeasurement){
+        this.unitMeasurement = unitMeasurement;
+    }
+
+   /**
+    * @return unitMeasurement
+    */
+    public String getUnitMeasurement() {
+        return unitMeasurement;
+    }
+
+   /**
+    * @param ingredientAmount to modify the value of private instance variable
+    */
+    public void setIngredientAmount(float ingredientAmount) {
+        this.ingredientAmount = ingredientAmount;
+    }
+    
+    /**
+     * @return the ingredientAmount
+     */
+    public float getIngredientAmount() {
+        return this.ingredientAmount;
+    }
+
+   /**
+    * @param numberCaloriesPerCup to modify the value of private instance variable
+    */
+    public void setNumberCaloriesPerCup(int numberCaloriesPerCup) {
+        this.numberCaloriesPerCup = numberCaloriesPerCup;
+    }
+
+   /**
+    * @return numberCaloriesPerCup
+    */
+    public int getNumberCaloriesPerCup() {
+        return numberCaloriesPerCup;
+    }
+
+   /**
+    * @param totalCalories to modify the value of private instance variable
+    */
+    public void setTotalCalories(double totalCalories) {
+        this.totalCalories = totalCalories;
+    }
+
+   /**
+    * @return totalCalories
+    */
+    public double getTotalCalories() {
+        return totalCalories;
+    }
+    
+    //Constructors starts here
+    
+    /**
+     * Refer to current class instance variable
+     */
+    public Ingredient() {
+        this.nameOfIngredient = "";
+        this.unitMeasurement = "";
+        this.ingredientAmount = 0;
+        this.numberCaloriesPerCup = 0;
+        this.totalCalories = 0.0;
+    }
+    
+    /**
+     * Parameterized constructor
+     * @param nameOfIngredient
+     * @param unitMeasurement
+     * @param ingredientAmount
+     * @param numberCaloriesPerCup
+     * @param totalCalories
+     */
+    public Ingredient(String nameOfIngredient, String unitMeasurement, float ingredientAmount, int numberCaloriesPerCup, double totalCalories) {
+        this.nameOfIngredient = nameOfIngredient;
+        this.unitMeasurement = unitMeasurement;
+        this.ingredientAmount = ingredientAmount;
+        this.numberCaloriesPerCup = numberCaloriesPerCup;
+        this.totalCalories = totalCalories;
+    }
+    //Constructors ends
+    
+    /**
+     * addIngredient method is to ask user to input the ingredient information
+     * then let user know that the ingredient is added to the list
+     * 
+     * @return newIngredient
+     */
+    public Ingredient addIngredient(){
+        Scanner scnr = new Scanner(System.in); //Create scanner object
+                
+        //Prompt for ingredient name
+        System.out.println("Please enter the ingredient name: ");
+        setNameOfIngredient(scnr.nextLine());//Read characters up until next new line
+        
+        //Prompt for the unit measurement
+        System.out.println("Please enter the unit measurement of " + getNameOfIngredient() + " (tbsp, tsp, cups, etc.): ");
+                
+        //Prompt user to enter the unit measurement - upper case are to convert to lower case
+        setUnitMeasurement(scnr.next().toLowerCase());
+        
+        //If unit measurement meets the condition, then print the selected unit measurement
+        if (getUnitMeasurement().equals("cups") || getUnitMeasurement().equals("ounces") || getUnitMeasurement().equals("tbsp") ||
+                getUnitMeasurement().equals("tsp") || getUnitMeasurement().equals("grams") || getUnitMeasurement().equals("kilograms") ||
+                getUnitMeasurement().equals("lbs")) {
+            System.out.println("You entered " + getUnitMeasurement() + ".");
+        }else { //Re-condition and re-prompt user for invalid input
+            System.out.println("You did not enter a unit measuresment. Please try again.");
+            setUnitMeasurement(scnr.next().toLowerCase());
+            
+            //If condition is met, then display the selected unit measurement
+            if (getUnitMeasurement().equals("cups") || getUnitMeasurement().equals("ounces") || getUnitMeasurement().equals("tbsp") ||
+                getUnitMeasurement().equals("tsp") || getUnitMeasurement().equals("grams") || getUnitMeasurement().equals("kilograms") ||
+                getUnitMeasurement().equals("lbs")) {
+                System.out.println("You selected " + getUnitMeasurement() + ".");
+            }else {//End prompt if condition is not met
+                System.out.println("Sorry, you are out of attempts.");
+            }
+        }
+        //End prompt for unit measurement
+        
+        //Prompt for the ingredient amount
+        System.out.println("Please enter the number of units between 1 and 1000 of " + getNameOfIngredient() + " it contains: ");
+        setIngredientAmount(scnr.nextFloat());
+        
+        //If entered ingredient amount is less than 1, re-prompt user
+        if (getIngredientAmount() < 1) {
+            System.out.println("The unit amount is not between 1 and 1000. Please enter a number between 1 and 1000.");
+            setIngredientAmount(scnr.nextFloat());
+            
+            //If re-entered number is invalid, attempt ends.
+            if ((getIngredientAmount() < 1) || (getIngredientAmount() > 1000)) {
+                System.out.println("The unit amount is not between 1 and 1000. Sorry, you are out of attempt.");
+            }else {//Number between 1 and 1000 is a valid number
+                System.out.println(getIngredientAmount() + " is a valid number.");
+            }
+        }
+        //First condition not met, then condition ingredient amount greater than 1000
+        //If second condition received invalid number, re-prompt user
+        else if (getIngredientAmount() > 1000) {
+            System.out.println("The unit amount is more than 1000. Please enter a number between 1 and 1000.");
+            setIngredientAmount(scnr.nextFloat());
+            
+            //If ingredient amount exceed 1000 or less than 1, user loose attempt to re-enter
+            if ((getIngredientAmount() < 1) || (getIngredientAmount() > 1000)) {
+                System.out.println("This unit amount is not between 1 and 1000. Sorry, you are out of attempt.");
+            }else { //If entered number is between 1 and 1000, number is valid
+                System.out.println(getIngredientAmount() + " is a valid number.");
+            }
+        }else { //If entered number is between 1 and 1000, number is valid
+            System.out.println(getIngredientAmount() + " is a valid number.");
+        }
+        //End prompt for ingredient amount
+        
+        //Prompt for calories per cup
+        System.out.println("How much calories does this " + getNameOfIngredient() + " contains? Please enter the number from 1 to 2000.");
+        setNumberCaloriesPerCup(scnr.nextInt());
+        
+        //If number of calories per cup is more than 2000, re-prompt
+        if (getNumberCaloriesPerCup() > 2000) {
+            System.out.println("The number of calories is more than 2000. Please enter a number between 1 and 2000.");
+            setNumberCaloriesPerCup(scnr.nextInt());
+            
+            //If re-entered number is not within 1 and 2000, user lost attempt to re-enter
+            if ((getNumberCaloriesPerCup() > 2000) || (getNumberCaloriesPerCup() < 1)) {
+                System.out.println("The number of calorie is not between 1 and 2000. Sorry, you are out of attempt.");
+            }else {//If entered number is between 1 and 2000, number is valid.
+                System.out.println(getNumberCaloriesPerCup() + " is a valid calorie number.");
+            }
+        }else if (getNumberCaloriesPerCup() < 1) {//Let user know that calorie number is less than 1 then re-prompt
+            System.out.println("The number of calorie is more than 1. Please enter a number between 1 and 2000.");
+            setNumberCaloriesPerCup(scnr.nextInt());
+            
+            //If entered number exceed 2000 or less than 1, user lost attempt to re-enter
+            if ((getNumberCaloriesPerCup() > 2000) || (getNumberCaloriesPerCup() < 1)) {
+                System.out.println("The number of calorie is not between 1 and 2000. Sorry, you are out of attempt.");
+            }else {//If entered number is between 1 and 2000, it is a valid number
+                System.out.println(getNumberCaloriesPerCup() + " is a valid calorie number.");
+            }
+        }else {//If entered number is between 1 and 2000, it is a valid number
+            System.out.println(getNumberCaloriesPerCup() + " is a valid calorie number.");
+        }
+        //End number calories per cup prompt
+        
+        //Calculate for total calories
+        setTotalCalories(getIngredientAmount() * getNumberCaloriesPerCup());
+        
+        //Print all entered value to user
+        System.out.println("The " + getNameOfIngredient() + " is " + getIngredientAmount() + " " + 
+                getUnitMeasurement() + " that is " + getNumberCaloriesPerCup() + " calories and has a total of " + getTotalCalories() + 
+                " calories.");
+        //Let user know that the ingredient is added to the list
+        System.out.println("The " + getNameOfIngredient() + " has been added to the ingredient list successfully.");
+        
+        //Create instance of this object
+        Ingredient newIngredient = new Ingredient(getNameOfIngredient(), getUnitMeasurement(), getIngredientAmount(), getNumberCaloriesPerCup(), getTotalCalories());
+        return newIngredient;
+    }
+    
+    /**
+     * printItemDetails method is to print the details of the ingredient after user 
+     * enter the information into the program
+     */
+    public void printItemDetails() {
+        System.out.println("\t" + "Name of Ingredient: " + getNameOfIngredient());
+        System.out.println("\t" + "Amount: " + getIngredientAmount());
+        System.out.println("\t" + "Unit Measurement: " + getUnitMeasurement());
+        System.out.println("\t" + "Calories Per Unit: " + getNumberCaloriesPerCup());
+        System.out.println("\t" + "Total Calories: " + getTotalCalories());
+    }
+}
