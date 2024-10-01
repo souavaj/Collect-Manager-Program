@@ -1,0 +1,109 @@
+package milesstone;
+
+import java.util.ArrayList;
+
+/**
+ * RecipeBox program is the driver application class that 
+ * allow user to create a new recipe and add to the collection
+ * that can be edit per user's request.
+ * 
+ * @author souavang_snhu
+ */
+public class RecipeBox {
+    //Initialize variable listOfRecipes as array list
+    private ArrayList<Recipe> listOfRecipes = new ArrayList();
+    
+    //Refer to current class instance variable
+    public RecipeBox() {
+        this.listOfRecipes = new ArrayList<>();
+    }
+    
+    /**
+     * Add accessor and mutator for listOfRecipes
+     * @param listOfRecipes
+     */
+    
+    //Mutator
+    public void setListOfRecipes(ArrayList<Recipe> listOfRecipes) {
+        this.listOfRecipes = listOfRecipes;
+    }
+    
+    //Accessor
+    public ArrayList<Recipe> getListOfRecipes() {
+        return listOfRecipes;
+    } 
+    
+    /**
+     * Add constructors for the RecipeBox
+     */
+    public void RecipeBox() {
+        this.listOfRecipes = new ArrayList<Recipe>();
+    }
+    /**
+     * Parameterized constructor
+     * @param listOfRecipes
+     */
+    public void RecipeBox(ArrayList<Recipe> listOfRecipes) {
+        this.listOfRecipes = listOfRecipes;
+    }
+    
+    /**
+     * Add the custom methods:
+     *    printAllRecipeDetails method is to accept a recipe from the listOfRecipe ArrayList
+     * @param selectedrecipe
+     */
+    public void printAllRecipeDetails(Recipe selectedrecipe) {
+        //Iterate throught listOfRecipes
+        for (Recipe recipe : listOfRecipes) {
+            //Condition names stored in listOfRecipes that matches with selectedrecipe
+            if (recipe.getRecipeName().equalsIgnoreCase(selectedrecipe.getRecipeName())) {
+                recipe.printRecipe();//Display the recipe details
+                return;
+            }
+        }
+        //Notify user if recipe name is not in the list
+        System.out.println(selectedrecipe.getRecipeName() + " is not found.");
+    }
+    /**printAllRecipeNames method is to print just the recipe names of each
+     * of the recipes in the listOfRecipes array list
+    */
+    public void printAllRecipeNames(){
+        //Loop through array list to print the recipe name
+        Recipe recipe = new Recipe();
+        //Iterate through listOfRecipes to print the name
+        for (int i = 0; i < listOfRecipes.size(); i++) {
+            System.out.println((i + 1) + ": " + listOfRecipes.get(i).getRecipeName());
+        }
+    }
+    
+    //addRecipe method is to add a new Recipe to the listOfRecipes
+    public void addRecipe() {
+        Recipe recipe = new Recipe();
+        listOfRecipes.add(recipe.addNewRecipe());//Add the recipe to the collection
+        System.out.println("A new recipe is added to the recipe collection."); //Notify user that it is added
+    }
+    
+    /**
+     * deleteRecipe method is to delete a recipe from the collection
+     * 
+     * @param selectedRecipe
+     */
+    public void deleteRecipe(Recipe selectedRecipe) {
+        //Loop through the recipe list that matches with the entered name and remove it
+        for(int i = 0; i < listOfRecipes.size(); i++) {
+            Recipe recipe = listOfRecipes.get(i); //Set items in the listOfRecipes to recipe variable
+            //Check to see if the entered name matches with what is stored in listOfRecipes
+            if (recipe.getRecipeName().equals(selectedRecipe.getRecipeName())) {
+                listOfRecipes.remove(i);//Delete the name if true
+            }
+            //Let user know the recipe name is removed
+            System.out.println(selectedRecipe.getRecipeName() + " has been deleted from the recipe collection.");
+        }
+    }
+    
+    //recipeTotal method is to calculate the total amount of recipe
+    public void boxTotal() {
+        Recipe recipe = new Recipe();
+        recipe.recipeTotal();
+    }
+}
