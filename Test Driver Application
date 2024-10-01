@@ -1,0 +1,62 @@
+package milesstone;
+
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+import java.util.Scanner;
+
+/**
+ * Driver application is the main function that runs the classes
+ * when calling the objects, and stores the recipe in the collection.
+ * @author Soua Vang
+ */
+public class Test {
+
+    /**
+     * @param args the command line arguments
+     */
+    //Main function to run the application
+    public static void main(String[] args) {
+        Recipe recipe = new Recipe(); //
+        RecipeBox myBox = new RecipeBox(); //
+        Scanner menuScnr = new Scanner(System.in);//Open scanner and store to menuScnr
+        
+        //Introduce and prompt user to select a menu
+        System.out.println("Hello, I am Max. I will be assisting you today. Please select a menu.");
+        System.out.println("");
+        System.out.println("Menu\n" + "1. Add Recipe\n" + "2. Print All Recipe Details\n" + "3. Print All Recipe Names\n" + 
+                "4. Get Recipe Total\n" + "5. Delete A Recipe\n" + "6. Done\n" + "Enter Here: ");
+        //Do-while loop to keep letting user to select the menu until user is done
+        do {
+            int input = menuScnr.nextInt();
+            
+            if (input == 1) {//Add a recipe if selected
+                myBox.addRecipe();
+            }
+            else if (input == 2) {//Print the recipe details if selected
+                System.out.println("Please enter the recipe name for details: ");
+                String name = menuScnr.next();
+                recipe.setRecipeName(name);//Set entered name to call
+                myBox.printAllRecipeDetails(recipe);//Call the entered name that is save in the collection
+            }
+            else if (input == 3) {//Print all the recipe names
+                myBox.printAllRecipeNames();
+            }
+            else if (input == 4) {//Calculate the recipe cost
+                myBox.boxTotal();
+            }
+            else if (input == 5){//Delete recipe name
+                System.out.println("Please enter the recipe name you want to delete: ");
+                String deleteName = menuScnr.next();
+                recipe.setRecipeName(deleteName);//Set the entered name as recipe name
+                myBox.deleteRecipe(recipe);//Search for the name and delete
+            }
+            else {
+                break;//Quit when select 'Done'
+            }
+        } while(menuScnr.hasNextInt() || menuScnr.hasNextLine());//true if next input is an int value
+    }
+}
